@@ -210,15 +210,16 @@ function showHistory() {
 }
 
 function navigate(value) {
+  function navigate(value) {
   const url = getURL(value);
   if (!url) return;
+
   address.value = url;
   pages[activeTab] = url;
-  homePage.style.display = "none";
-  historyPanel.style.display = "none";
-  frame.style.display = "block";
-  frame.src = url;
   saveHistory(url);
+
+  window.open(url, "_blank", "noopener,noreferrer");
+}
 }
 
 function showHome() {
