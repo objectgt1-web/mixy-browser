@@ -1,1 +1,294 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#09080d">
+<title>Mixy Browser</title>
+<style>
+:root {
+  --purple:#a855f7;
+  --bg:#09080d;
+  --panel:#15111d;
+  --border:#30243b;
+  --text:#fff;
+  --muted:#aaa0b5;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,sans-serif;min-height:100vh;
+}
+header{
+  height:62px;display:flex;align-items:center;gap:12px;
+  padding:0 18px;background:#100c16;border-bottom:1px solid var(--border);
+}
+.logo{font-size:20px;font-weight:bold;color:var(--purple)}
+.logo span{color:white}
+.header-right{margin-left:auto;color:var(--muted);font-size:12px}
+.tabs{
+  display:flex;gap:7px;padding:10px 15px;
+  background:#100c16;overflow-x:auto;
+}
+.tab{
+  padding:10px 15px;border:1px solid var(--border);
+  border-radius:9px;background:#1b1423;color:var(--muted);
+  cursor:pointer;white-space:nowrap;
+}
+.tab.active{background:#39204d;color:white;border-color:var(--purple)}
+.toolbar{
+  display:flex;align-items:center;gap:8px;padding:12px 15px;
+  background:#100c16;border-bottom:1px solid var(--border);
+}
+.toolbar button,.action{
+  background:#21182b;border:1px solid var(--border);
+  color:white;padding:10px 13px;border-radius:9px;cursor:pointer;
+}
+.toolbar button:hover,.action:hover{border-color:var(--purple)}
+#address{
+  flex:1;min-width:0;padding:12px 15px;border-radius:10px;
+  border:1px solid var(--border);background:#1b1423;color:white;
+  outline:none;
+}
+#address:focus{border-color:var(--purple)}
+main{max-width:950px;margin:65px auto;padding:20px}
+.home{text-align:center}
+.big-logo{font-size:55px;font-weight:bold;color:var(--purple);margin-bottom:5px}
+.subtitle{color:var(--muted);margin-bottom:30px}
+.search{
+  display:flex;gap:8px;max-width:650px;margin:auto;
+}
+.search input{
+  flex:1;min-width:0;padding:16px;border-radius:12px;
+  background:#17111f;border:1px solid var(--border);color:white;
+  font-size:15px;outline:none;
+}
+.search button{
+  padding:0 20px;background:var(--purple);border:0;
+  border-radius:12px;color:white;font-weight:bold;cursor:pointer;
+}
+.shortcuts{
+  display:flex;justify-content:center;flex-wrap:wrap;
+  gap:12px;margin-top:35px;
+}
+.shortcut{
+  width:105px;padding:18px 8px;border:1px solid var(--border);
+  background:var(--panel);border-radius:13px;color:white;
+  text-decoration:none;font-size:13px;
+}
+.shortcut:hover{border-color:var(--purple)}
+.shortcut strong{display:block;font-size:23px;margin-bottom:8px}
+.notice{
+  margin:30px auto 0;max-width:600px;color:var(--muted);
+  font-size:12px;line-height:1.7;
+}
+#history-panel{
+  display:none;max-width:700px;margin:40px auto;
+}
+.history-item{
+  padding:13px;margin:8px 0;border:1px solid var(--border);
+  border-radius:10px;background:var(--panel);overflow-wrap:anywhere;
+}
+.history-item a{color:#d6a0ff}
+#browser-frame{
+  display:none;width:100%;height:calc(100vh - 190px);
+  border:0;background:white;
+}
+footer{text-align:center;color:#62586b;font-size:11px;padding:20px}
+@media(max-width:600px){
+  header{padding:0 10px}
+  .toolbar{gap:5px;padding:8px}
+  .toolbar button{padding:9px}
+  main{margin:40px auto}
+  .big-logo{font-size:43px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">MIXY<span> BROWSER</span></div>
+  <div class="header-right">Your web space</div>
+</header>
+
+<div class="tabs" id="tabs">
+  <button class="tab active" data-tab="home">New Tab</button>
+</div>
+
+<div class="toolbar">
+  <button id="back" title="Back">←</button>
+  <button id="forward" title="Forward">→</button>
+  <button id="refresh" title="Refresh">↻</button>
+  <button id="home-button" title="Home">⌂</button>
+  <input id="address" placeholder="Search Google or enter a URL">
+  <button id="go">Go</button>
+  <button id="new-tab" title="New tab">+</button>
+</div>
+
+<main id="home-page">
+  <section class="home">
+    <div class="big-logo">MIXY</div>
+    <div class="subtitle">A new way to explore the web</div>
+
+    <form class="search" id="search-form">
+      <input id="search-input" placeholder="Search the web..." autocomplete="off">
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="shortcuts">
+      <a class="shortcut" href="https://www.google.com" target="_blank" rel="noopener"><strong>G</strong>Google</a>
+      <a class="shortcut" href="https://www.youtube.com" target="_blank" rel="noopener"><strong>▶</strong>YouTube</a>
+      <a class="shortcut" href="https://www.github.com" target="_blank" rel="noopener"><strong>⌘</strong>GitHub</a>
+      <a class="shortcut" href="https://www.discord.com" target="_blank" rel="noopener"><strong>◉</strong>Discord</a>
+    </div>
+
+    <p class="notice">
+      Mixy Browser is a browser-style web app. Some websites block
+      being displayed inside another site's frame. Use the open button
+      when a page cannot load here.
+    </p>
+  </section>
+
+  <section id="history-panel">
+    <h2>Recent searches</h2>
+    <div id="history-list"></div>
+    <button class="action" id="clear-history">Clear History</button>
+  </section>
+</main>
+
+<iframe id="browser-frame" title="Web page" referrerpolicy="no-referrer"></iframe>
+
+<footer>MADE BY MIXY ✦</footer>
+
+<script>
+const address = document.getElementById("address");
+const frame = document.getElementById("browser-frame");
+const homePage = document.getElementById("home-page");
+const historyPanel = document.getElementById("history-panel");
+const searchInput = document.getElementById("search-input");
+const tabs = document.getElementById("tabs");
+
+let tabCount = 1;
+let activeTab = 1;
+let pages = {1:""};
+
+function getURL(value) {
+  value = value.trim();
+  if (!value) return "";
+  if (/^https?:\/\//i.test(value)) return value;
+  if (/^[\w-]+\.[a-z]{2,}([/:?#]|$)/i.test(value)) return "https://" + value;
+  return "https://www.google.com/search?q=" + encodeURIComponent(value);
+}
+
+function saveHistory(url) {
+  let history = JSON.parse(localStorage.getItem("mixy-history") || "[]");
+  history.unshift({url, time:new Date().toLocaleString()});
+  localStorage.setItem("mixy-history", JSON.stringify(history.slice(0,40)));
+  showHistory();
+}
+
+function showHistory() {
+  const history = JSON.parse(localStorage.getItem("mixy-history") || "[]");
+  const list = document.getElementById("history-list");
+  list.replaceChildren();
+  history.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "history-item";
+    const link = document.createElement("a");
+    link.href = item.url;
+    link.textContent = item.url;
+    link.target = "_blank";
+    link.rel = "noopener";
+    const time = document.createElement("div");
+    time.style.color = "#aaa0b5";
+    time.style.fontSize = "11px";
+    time.textContent = item.time;
+    div.append(link,time);
+    list.appendChild(div);
+  });
+}
+
+function navigate(value) {
+  const url = getURL(value);
+  if (!url) return;
+  address.value = url;
+  pages[activeTab] = url;
+  homePage.style.display = "none";
+  historyPanel.style.display = "none";
+  frame.style.display = "block";
+  frame.src = url;
+  saveHistory(url);
+}
+
+function showHome() {
+  pages[activeTab] = "";
+  address.value = "";
+  frame.style.display = "none";
+  frame.src = "about:blank";
+  homePage.style.display = "block";
+  historyPanel.style.display = "none";
+}
+
+document.getElementById("go").addEventListener("click", () => navigate(address.value));
+address.addEventListener("keydown", event => {
+  if (event.key === "Enter") navigate(address.value);
+});
+document.getElementById("search-form").addEventListener("submit", event => {
+  event.preventDefault();
+  navigate(searchInput.value);
+});
+document.getElementById("home-button").addEventListener("click", showHome);
+document.getElementById("refresh").addEventListener("click", () => {
+  if (pages[activeTab]) frame.src = pages[activeTab];
+});
+document.getElementById("back").addEventListener("click", () => {
+  try { frame.contentWindow.history.back(); } catch {}
+});
+document.getElementById("forward").addEventListener("click", () => {
+  try { frame.contentWindow.history.forward(); } catch {}
+});
+
+function createTab() {
+  tabCount++;
+  activeTab = tabCount;
+  pages[activeTab] = "";
+  const button = document.createElement("button");
+  button.className = "tab";
+  button.dataset.id = activeTab;
+  button.textContent = "New Tab";
+  tabs.appendChild(button);
+  switchTab(activeTab);
+}
+
+function switchTab(id) {
+  activeTab = Number(id);
+  document.querySelectorAll(".tab").forEach(tab => {
+    tab.classList.toggle("active", Number(tab.dataset.id || 1) === activeTab);
+  });
+  const url = pages[activeTab] || "";
+  if (url) {
+    address.value = url;
+    homePage.style.display = "none";
+    historyPanel.style.display = "none";
+    frame.style.display = "block";
+    frame.src = url;
+  } else {
+    showHome();
+  }
+}
+tabs.addEventListener("click", event => {
+  const tab = event.target.closest(".tab");
+  if (tab) switchTab(tab.dataset.id || 1);
+});
+document.getElementById("new-tab").addEventListener("click", createTab);
+
+document.getElementById("clear-history").addEventListener("click", () => {
+  localStorage.removeItem("mixy-history");
+  showHistory();
+});
+showHistory();
+</script>
+</body>
+</html>
+
